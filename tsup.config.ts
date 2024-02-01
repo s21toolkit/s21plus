@@ -1,5 +1,7 @@
 // eslint-disable-next-line import/no-unresolved
 import { userscript } from "esbuild-plugin-userscript"
+import sveltePlugin from "esbuild-svelte"
+import preprocess from "svelte-preprocess"
 import { defineConfig } from "tsup"
 import pkg from "@root/package.json" assert { type: "json" }
 
@@ -11,11 +13,11 @@ const metadata = {
 	description: pkg.description,
 	license: pkg.license,
 	version: pkg.version,
-	namespace: pkg.homepage,
-	match: pkg.homepage,
+	namespace: "https://edu.21-school.ru",
+	match: "https://edu.21-school.ru/*",
 	"run-at": "document-body",
 	connect: [],
-	grant: [],
+	grant: ["GM.addStyle"],
 }
 
 // eslint-disable-next-line import/no-default-export
@@ -30,7 +32,17 @@ export default defineConfig({
 	outExtension: () => {
 		return { js: ".user.js", dts: ".user.dts" }
 	},
+	injectStyle(css) {
+		return `
+		GM.addStyle(\`\n${css.slice(1, -1)}\`)
+		`
+	},
 	esbuildPlugins: [
+		sveltePlugin({
+			preprocess: preprocess({
+				typescript: true,
+			}),
+		}),
 		userscript({
 			metadata,
 			proxy: dev
