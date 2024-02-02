@@ -5,7 +5,7 @@
 			"type": "npm",
 			"script": "dev",
 			"label": "npm: dev",
-			"detail": "rollup -c -w",
+			"detail": "ENVIRONMENT=development tsup --watch",
 			"problemMatcher": [
 				"$tsc-watch"
 			],
