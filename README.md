@@ -1,16 +1,17 @@
-# s21eduscript
+# s21plus
 
 ![release.yml](https://github.com/s21toolkit/s21eduscript/actions/workflows/release.yaml/badge.svg)
 ![lint.yml](https://github.com/s21toolkit/s21eduscript/actions/workflows/lint.yaml/badge.svg)
 
-# Features
-- Add copy slug button to reviews
+# Функциональность
+- Кнопка для копирования информации о проверке в календаре
 
   ![copy_slug.jpg](/img/copy_slug.jpg)
 
-  Will be copied
+  Сохраняет в буфер обмена строку вида
   ```
   LinuxMonitoring v1.0 26 January • 14:00 – 14:45 (maurinla)
   ```
 
-  > :memo: Useful for archiving videos on youtube
+  > [!TIP]
+  > Полезно для выкладывания записей проверок на YouTube
