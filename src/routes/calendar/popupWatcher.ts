@@ -21,7 +21,7 @@ export async function injectPopupWatcher() {
 	const view = await waitNotNull<Node>(() =>
 		document
 			.evaluate(
-				"/html/body/div/div[5]/div",
+				"/html/body/div[1]/div[4]/div",
 				document,
 				null,
 				XPathResult.ANY_TYPE,
