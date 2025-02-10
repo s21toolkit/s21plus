@@ -2,7 +2,7 @@ function pathnameHash() {
 	return unsafeWindow.location.pathname.replace("/", "")
 }
 
-export function injectNavigationHook(callback) {
+export function injectNavigationHook(callback: (href: string) => void) {
 	let hash = pathnameHash()
 
 	const H = unsafeWindow.history
