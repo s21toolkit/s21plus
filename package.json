@@ -9,8 +9,9 @@
     "node": ">=20"
   },
   "scripts": {
-    "build": "node build.js",
+    "build": "node build.mjs",
     "dev": "ENVIRONMENT=development node build.mjs",
+    "install": "xdg-open ./build/index.user.js",
     "lint": "eslint src/**/*.ts src/*.ts",
     "lint:fix": "eslint --fix src/**/*.ts src/*.ts",
     "release": "npm version -m 'chore(release): %s' --",

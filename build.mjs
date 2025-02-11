@@ -7,13 +7,13 @@ import { plain, proxy } from "./meta.mjs"
 
 const dev = process.env.ENVIRONMENT === "development"
 
-const ctx = await esbuild.context({
+const settings = {
 	entryPoints: ["src/index.ts"],
 	logLevel: "info",
 	format: "iife",
 	target: "es6",
 	bundle: true,
-	minify: !dev,
+	minify: false,
 	outdir: "./build",
 	outExtension: {
 		".js": ".user.js",
@@ -32,7 +32,15 @@ const ctx = await esbuild.context({
 			}),
 		}),
 	],
-})
+}
+
+
+if (!dev) {
+	await esbuild.build(settings)
+	process.exit(0)
+}
+
+const ctx = await esbuild.context(settings)
 
 writeFileSync("./build/index.proxy.user.js", proxy)
 
