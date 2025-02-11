@@ -4,9 +4,12 @@ export async function waitNotNull<T>(
 	func: () => Promise<T | null> | T | null,
 	timeout = 10000,
 	interval = 1000,
-): Promise<T> {
-	return new Promise<T>((res, rej) => {
+) {
+	return new Promise<NonNullable<T>>(async (res, rej) => {
 		let time = timeout
+		const v = await func()
+		if (v) res(v)
+
 		const i = setInterval(async () => {
 			const c = await func()
 			time -= interval
