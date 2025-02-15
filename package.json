@@ -6,7 +6,7 @@
   "module": "esm",
   "type": "module",
   "engines": {
-    "node": ">=20"
+    "node": ">=23"
   },
   "scripts": {
     "build": "node build.mjs",
@@ -14,7 +14,7 @@
     "install": "xdg-open ./build/index.user.js",
     "lint": "eslint src/**/*.ts src/*.ts",
     "lint:fix": "eslint --fix src/**/*.ts src/*.ts",
-    "release": "npm version -m 'chore(release): %s' --",
+    "release": "pnpm build && mv build/index.user.js . && git add index.user.js && pnpm version -m 'chore(release): %s' --",
     "postversion": "git push & git push --tags"
   },
   "keywords": [],
