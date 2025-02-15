@@ -5,7 +5,7 @@
 // @author        s21toolkit
 // @description   s21 platform enchancement features
 // @license       AGPL-3.0-only
-// @version       0.0.2
+// @version       0.0.3
 // @namespace     https://edu.21-school.ru
 // @match         https://edu.21-school.ru/*
 // @run-at        document-start
@@ -3556,10 +3556,10 @@ ${indent}in ${name}`).join("")}
   }
   function findUsernameNearby(i) {
     return __async(this, null, function* () {
-      var _a3, _b2, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o;
+      var _a3, _b2, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p, _q;
       const u = yield getCurrentUser();
       const grandparent = (_a3 = i.parentNode) == null ? void 0 : _a3.parentNode;
-      return (_o = (_m = (_k = (_i = (_f = (_c = i.closest("[data-testid='UserMenuWidget.MoreInfoButton']") ? u.login : void 0) != null ? _c : i.closest("[data-testid='components.teamMembersList.teamUser']") ? (_b2 = grandparent == null ? void 0 : grandparent.querySelector("[data-testid='components.teamMembersList.userLogin']")) == null ? void 0 : _b2.textContent : void 0) != null ? _f : (_e = (_d = grandparent == null ? void 0 : grandparent.parentNode) == null ? void 0 : _d.querySelector("[data-testid='dashboard.personalInfo.name']")) == null ? void 0 : _e.textContent) != null ? _i : (_h = (_g = grandparent == null ? void 0 : grandparent.parentNode) == null ? void 0 : _g.querySelector("[data-testid='personalInfo.studentLogin']")) == null ? void 0 : _h.textContent) != null ? _k : (_j = grandparent == null ? void 0 : grandparent.querySelector("[data-testid='Coalition.CoalitionList.Title.mvpLogin']")) == null ? void 0 : _j.textContent) != null ? _m : (_l = grandparent == null ? void 0 : grandparent.querySelector("[data-testid='Coalition.CoalitionList.Title.masterLogin']")) == null ? void 0 : _l.textContent) != null ? _o : (_n = grandparent == null ? void 0 : grandparent.querySelector("[data-testid='Coalition.CoalitionList.Member.login']")) == null ? void 0 : _n.textContent;
+      return (_q = (_o = (_m = (_k = (_i = (_f = (_c = i.closest("[data-testid='UserMenuWidget.MoreInfoButton']") ? u.login : void 0) != null ? _c : i.closest("[data-testid='components.teamMembersList.teamUser']") ? (_b2 = grandparent == null ? void 0 : grandparent.querySelector("[data-testid='components.teamMembersList.userLogin']")) == null ? void 0 : _b2.textContent : void 0) != null ? _f : (_e = (_d = grandparent == null ? void 0 : grandparent.parentNode) == null ? void 0 : _d.querySelector("[data-testid='dashboard.personalInfo.name']")) == null ? void 0 : _e.textContent) != null ? _i : (_h = (_g = grandparent == null ? void 0 : grandparent.parentNode) == null ? void 0 : _g.querySelector("[data-testid='personalInfo.studentLogin']")) == null ? void 0 : _h.textContent) != null ? _k : (_j = grandparent == null ? void 0 : grandparent.querySelector("[data-testid='Coalition.CoalitionList.Title.mvpLogin']")) == null ? void 0 : _j.textContent) != null ? _m : (_l = grandparent == null ? void 0 : grandparent.querySelector("[data-testid='Coalition.MembersList.Member.loginDisplay']")) == null ? void 0 : _l.textContent) != null ? _o : (_n = grandparent == null ? void 0 : grandparent.querySelector("[data-testid='Coalition.CoalitionList.Title.masterLogin']")) == null ? void 0 : _n.textContent) != null ? _q : (_p = grandparent == null ? void 0 : grandparent.querySelector("[data-testid='Coalition.CoalitionList.Member.login']")) == null ? void 0 : _p.textContent;
     });
   }
   var observer4 = new MutationObserver((records) => __async(void 0, null, function* () {
