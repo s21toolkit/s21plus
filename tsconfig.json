@@ -41,4 +41,5 @@
 		/* Allow implicit any by default */
 		"noImplicitAny": false
 	},
+	"exclude": ["node_modules", "build"]
 }
