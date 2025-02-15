@@ -1,5 +1,7 @@
 # s21plus
 
+# Установка
+[Последняя версия](https://github.com/s21toolkit/s21plus/raw/refs/heads/master/index.user.js)
 
 # Функциональность
 
