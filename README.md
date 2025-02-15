@@ -1,7 +1,5 @@
 # s21plus
 
-![release.yml](https://github.com/s21toolkit/s21eduscript/actions/workflows/release.yaml/badge.svg)
-![lint.yml](https://github.com/s21toolkit/s21eduscript/actions/workflows/lint.yaml/badge.svg)
 
 # Функциональность
 
