@@ -37,6 +37,7 @@ async function findUsernameNearby(i: HTMLImageElement) {
 		(grandparent?.parentNode?.querySelector("[data-testid='dashboard.personalInfo.name']")?.textContent) ??
 		(grandparent?.parentNode?.querySelector("[data-testid='personalInfo.studentLogin']")?.textContent) ??
 		(grandparent?.querySelector("[data-testid='Coalition.CoalitionList.Title.mvpLogin']")?.textContent) ??
+		(grandparent?.querySelector("[data-testid='Coalition.MembersList.Member.loginDisplay']")?.textContent) ??
 		(grandparent?.querySelector("[data-testid='Coalition.CoalitionList.Title.masterLogin']")?.textContent) ??
 		(grandparent?.querySelector("[data-testid='Coalition.CoalitionList.Member.login']")?.textContent)
 }
