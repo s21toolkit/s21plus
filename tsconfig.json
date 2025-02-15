@@ -2,10 +2,7 @@
 	"compilerOptions": {
 		/* Language and Environment */
 		"target": "ESNext",
-		"lib": [
-			"ESNext",
-			"DOM"
-		],
+		"lib": [ "ESNext", "DOM" ],
 		"experimentalDecorators": true,
 		"emitDecoratorMetadata": true,
 		/* Modules */
@@ -15,15 +12,9 @@
 		"allowSyntheticDefaultImports": true,
 		"baseUrl": ".",
 		"paths": {
-			"@/*": [
-				"src/*"
-			],
-			"@root/*": [
-				"./*"
-			]
+			"@/*": ["src/*"],
+			"@root/*": ["./*"]
 		},
-		/* Emit */
-		"noEmit": true,
 		/* Interop Constraints */
 		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": true,
@@ -37,9 +28,7 @@
 		"noImplicitOverride": true,
 		"noUncheckedIndexedAccess": true,
 		/* Completeness */
-		"skipLibCheck": true,
-		/* Allow implicit any by default */
-		"noImplicitAny": false
+		"skipLibCheck": true
 	},
 	"exclude": ["node_modules", "build"]
 }

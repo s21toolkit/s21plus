@@ -1,7 +1,13 @@
-<script>
-	let { text, dataset } = $props()
+<script lang="ts">
+	let {
+		text,
+		dataset
+	}: {
+		text: string,
+		dataset: Record<string, string>
+	} = $props()
 
-	let root
+	let root: HTMLElement
 
 	$effect(() => {
 		Object.entries(dataset).forEach(([k, v]) => root.dataset[k] = v)
