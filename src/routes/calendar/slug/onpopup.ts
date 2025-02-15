@@ -1,5 +1,5 @@
 import { mount } from "svelte"
-import Button from "./widgets/Button.svelte"
+import Button from "@/components/Button.svelte"
 
 export function copySlugFromPopupToCpipboard(popup: Element) {
 	return function () {
