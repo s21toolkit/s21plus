@@ -34,7 +34,6 @@ const settings = {
 	],
 }
 
-
 if (!dev) {
 	await esbuild.build(settings)
 	process.exit(0)
