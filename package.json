@@ -1,7 +1,7 @@
 {
   "name": "s21plus",
   "version": "v0.0.1",
-  "description": "s21 platform enchancements features",
+  "description": "s21 platform enchancement features",
   "homepage": "https://edu.21-school.ru",
   "module": "esm",
   "type": "module",
