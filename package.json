@@ -1,6 +1,6 @@
 {
   "name": "s21plus",
-  "version": "v0.0.1",
+  "version": "0.0.2",
   "description": "s21 platform enchancement features",
   "homepage": "https://edu.21-school.ru",
   "module": "esm",
@@ -11,7 +11,7 @@
   "scripts": {
     "build": "node build.mjs",
     "dev": "ENVIRONMENT=development node build.mjs",
-    "release": "pnpm build && mv build/index.user.js . && git add index.user.js && pnpm version --force -m 'chore(release): %s' --",
+    "release": "pnpm build && mv build/index.user.js . && git add index.user.js",
     "postversion": "git push & git push --tags"
   },
   "keywords": [],
