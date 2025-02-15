@@ -1,9 +1,9 @@
-function pathnameHash() {
-	return unsafeWindow.location.pathname.replace("/", "")
+function pathname() {
+	return unsafeWindow.location.pathname.replace(/\/+$/, "")
 }
 
-export function injectNavigationHook(callback: (href: string) => void) {
-	let hash = pathnameHash()
+export function injectNavigationHook(callback: (state: { oldpath: string, newpath: string }) => void) {
+	let hash = pathname()
 
 	const H = unsafeWindow.history
 	const oldPushState = H.pushState
@@ -15,14 +15,15 @@ export function injectNavigationHook(callback: (href: string) => void) {
 	}
 
 	H.onpushstate = () => {
-		if (pathnameHash() === hash) return
+		const nhash = pathname()
+		if (nhash === hash) return
 
-		hash = pathnameHash()
-		callback(unsafeWindow.location.href)
+		hash = nhash
+		callback({ oldpath: hash, newpath: nhash })
 	}
 
 	unsafeWindow.addEventListener("popstate", H.onpushstate)
 
 	// Call first time manually since page load doesent count as navigation
-	callback(unsafeWindow.location.href)
+	callback({ oldpath: hash, newpath: pathname() })
 }

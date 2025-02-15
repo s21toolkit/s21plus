@@ -1,8 +1,13 @@
-import { addOnpopupListener, injectPopupWatcher } from "./popupWatcher"
+import { addOnpopupListener, ejectPopupWatcher, injectPopupWatcher } from "./popupWatcher"
 import { injectSlugButton } from "./slug/onpopup"
 
-export async function calendarRoute() {
-	await injectPopupWatcher()
+export default {
+	async load() {
+		await injectPopupWatcher()
 
-	addOnpopupListener(injectSlugButton)
+		addOnpopupListener(injectSlugButton)
+	},
+	async unload() {
+		ejectPopupWatcher()
+	}
 }

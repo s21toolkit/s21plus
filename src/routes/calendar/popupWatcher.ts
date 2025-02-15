@@ -36,6 +36,8 @@ export async function injectPopupWatcher() {
 	console.log("Observing for popups on", view)
 }
 
+export function ejectPopupWatcher() { observer.disconnect() }
+
 export function addOnpopupListener(listener: PopupCallback) {
 	onpopup.add(listener)
 }
