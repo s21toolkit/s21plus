@@ -5,6 +5,7 @@ export interface OperationHookConfig {
 	oneshot: boolean
 }
 
+const operationBroadcastHooks: OperationHook[] = []
 const operationHooks: Map<string, OperationHook[]> = new Map()
 const operationHookOneshots: Map<string, OperationHook[]> = new Map()
 
@@ -12,10 +13,18 @@ export function addOperationHook(
 	operationName: string,
 	config: OperationHookConfig,
 ) {
+	if (operationName === '*') {
+		operationBroadcastHooks.push(config.hook)
+		return
+	}
+
 	const collection = config.oneshot ? operationHookOneshots : operationHooks
 
-	collection[operationName] ??= []
-	collection[operationName].push(config.hook)
+	const hooks = collection.get(operationName) || []
+	if (!hooks.length) {
+		collection.set(operationName, hooks)
+	}
+	hooks.push(config.hook)
 }
 
 async function modify(request: string, response: string) {
@@ -23,7 +32,11 @@ async function modify(request: string, response: string) {
 	const data = JSON.parse(response)
 	const res = data?.data ?? data
 
-	const oneshots = operationHookOneshots[req.operationName]
+	for (const op of operationBroadcastHooks) {
+		await op(req, res)
+	}
+
+	const oneshots = operationHookOneshots.get(req.operationName)
 	if (oneshots) {
 		for (const op of oneshots) {
 			await op(req, res)
@@ -31,13 +44,12 @@ async function modify(request: string, response: string) {
 		oneshots.length = 0
 	}
 
-	const hooks = operationHookOneshots[req.operationName]
+	const hooks = operationHooks.get(req.operationName)
 	if (hooks) {
 		for (const op of hooks) {
 			await op(req, res)
 		}
 	}
-
 	return JSON.stringify(data)
 }
 
