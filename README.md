@@ -21,6 +21,8 @@ LinuxMonitoring v1.0 26 January • 14:00 – 14:45 (maurinla)
 
 ![dashboard](./img/dashborad.png)
 
-## Фаллбек на nekos.best при отсутсвии граватара
+## Фаллбек на rocketchat или nekos.best при отсутсвии граватара
 
 ![nekos.best](./img/nekos.png)
+
+> :warning: Лица были удалены с превью для избежания вопросов
