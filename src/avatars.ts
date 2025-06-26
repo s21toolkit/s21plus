@@ -11,10 +11,20 @@ async function digestText(message: string) {
 	return hashHex
 }
 
+function rocketAvatar(username: string) {
+	return `https://rocketchat-student.21-school.ru/avatar/${username}`
+}
+
+async function isRocketAvatarExists(username: string) {
+	const res = await fetch(rocketAvatar(username), { method: "HEAD" })
+	return res.headers.get("content-type") !== "image/svg+xml"
+}
+
 const loginHashes = new Map()
 export async function getGravatarUrl(username: string) {
 	if (loginHashes.has(username)) {
-		return `https://gravatar.com/avatar/${loginHashes.get(username)}?s=512&d=${encodeURIComponent(await getNeko(username))}`
+		let avatar = await (await isRocketAvatarExists(username) ? rocketAvatar(username) : getNeko(username))
+		return `https://gravatar.com/avatar/${loginHashes.get(username)}?s=512&d=${encodeURIComponent(avatar)}`
 	}
 
 	const email = `${username}@student.21-school.ru`
