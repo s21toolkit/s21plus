@@ -5,7 +5,7 @@
 // @author        s21toolkit
 // @description   s21 platform enchancement features
 // @license       AGPL-3.0-only
-// @version       0.0.3
+// @version       0.0.4
 // @namespace     https://edu.21-school.ru
 // @match         https://edu.21-school.ru/*
 // @run-at        document-start
@@ -3456,13 +3456,20 @@ ${indent}in ${name}`).join("")}
   }
 
   // src/utils/gqlInterceptor.ts
+  var operationBroadcastHooks = [];
   var operationHooks = /* @__PURE__ */ new Map();
   var operationHookOneshots = /* @__PURE__ */ new Map();
   function addOperationHook(operationName, config) {
-    var _a3;
+    if (operationName === "*") {
+      operationBroadcastHooks.push(config.hook);
+      return;
+    }
     const collection = config.oneshot ? operationHookOneshots : operationHooks;
-    (_a3 = collection[operationName]) != null ? _a3 : collection[operationName] = [];
-    collection[operationName].push(config.hook);
+    const hooks = collection.get(operationName) || [];
+    if (!hooks.length) {
+      collection.set(operationName, hooks);
+    }
+    hooks.push(config.hook);
   }
   function modify(request, response) {
     return __async(this, null, function* () {
@@ -3470,14 +3477,17 @@ ${indent}in ${name}`).join("")}
       const req = JSON.parse(request);
       const data = JSON.parse(response);
       const res = (_a3 = data == null ? void 0 : data.data) != null ? _a3 : data;
-      const oneshots = operationHookOneshots[req.operationName];
+      for (const op of operationBroadcastHooks) {
+        yield op(req, res);
+      }
+      const oneshots = operationHookOneshots.get(req.operationName);
       if (oneshots) {
         for (const op of oneshots) {
           yield op(req, res);
         }
         oneshots.length = 0;
       }
-      const hooks = operationHookOneshots[req.operationName];
+      const hooks = operationHooks.get(req.operationName);
       if (hooks) {
         for (const op of hooks) {
           yield op(req, res);
@@ -3542,11 +3552,21 @@ ${indent}in ${name}`).join("")}
       return hashHex;
     });
   }
+  function rocketAvatar(username) {
+    return `https://rocketchat-student.21-school.ru/avatar/${username}`;
+  }
+  function isRocketAvatarExists(username) {
+    return __async(this, null, function* () {
+      const res = yield fetch(rocketAvatar(username), { method: "HEAD" });
+      return res.headers.get("content-type") !== "image/svg+xml";
+    });
+  }
   var loginHashes = /* @__PURE__ */ new Map();
   function getGravatarUrl(username) {
     return __async(this, null, function* () {
       if (loginHashes.has(username)) {
-        return `https://gravatar.com/avatar/${loginHashes.get(username)}?s=512&d=${encodeURIComponent(yield getNeko(username))}`;
+        let avatar = yield (yield isRocketAvatarExists(username)) ? rocketAvatar(username) : getNeko(username);
+        return `https://gravatar.com/avatar/${loginHashes.get(username)}?s=512&d=${encodeURIComponent(avatar)}`;
       }
       const email = `${username}@student.21-school.ru`;
       const hash2 = yield digestText(email);
