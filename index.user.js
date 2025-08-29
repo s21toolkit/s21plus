@@ -5,9 +5,9 @@
 // @author        s21toolkit
 // @description   s21 platform enchancement features
 // @license       AGPL-3.0-only
-// @version       0.0.4
-// @namespace     https://edu.21-school.ru
-// @match         https://edu.21-school.ru/*
+// @version       0.0.5
+// @namespace     https://platform.21-school.ru
+// @match         https://platform.21-school.ru/*
 // @run-at        document-start
 
 // ==/UserScript==
