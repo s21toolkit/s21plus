@@ -58,7 +58,6 @@ const observer = new MutationObserver(async (records) => {
 
 		if (img.src.includes("/noavatar")) {
 			const username = await findUsernameNearby(img)
-			console.log(img, username)
 			if (!username) continue
 
 			if(window.location.pathname === "/competition/tournament") {
