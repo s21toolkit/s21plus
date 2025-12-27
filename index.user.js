@@ -5,7 +5,7 @@
 // @author        s21toolkit
 // @description   s21 platform enchancement features
 // @license       AGPL-3.0-only
-// @version       0.0.5
+// @version       0.0.6
 // @namespace     https://platform.21-school.ru
 // @match         https://platform.21-school.ru/*
 // @run-at        document-start
@@ -3587,7 +3587,6 @@ ${indent}in ${name}`).join("")}
       const img = m.target;
       if (img.src.includes("/noavatar")) {
         const username = yield findUsernameNearby(img);
-        console.log(img, username);
         if (!username) continue;
         if (window.location.pathname === "/competition/tournament") {
           yield ensureNekoPoolLength(50);
