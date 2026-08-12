@@ -5,7 +5,7 @@
 // @author        s21toolkit
 // @description   s21 platform enchancement features
 // @license       AGPL-3.0-only
-// @version       0.0.6
+// @version       0.0.7
 // @namespace     https://platform.21-school.ru
 // @match         https://platform.21-school.ru/*
 // @run-at        document-start
@@ -3555,23 +3555,33 @@ ${indent}in ${name}`).join("")}
   function rocketAvatar(username) {
     return `https://rocketchat-student.21-school.ru/avatar/${username}`;
   }
-  function isRocketAvatarExists(username) {
+  function getRocketAvatarUrl(username) {
     return __async(this, null, function* () {
-      const res = yield fetch(rocketAvatar(username), { method: "HEAD" });
-      return res.headers.get("content-type") !== "image/svg+xml";
+      let url = rocketAvatar(username);
+      const res = yield fetch(url, { method: "HEAD" });
+      return res.headers.get("content-type") !== "image/svg+xml" ? url : void 0;
     });
   }
   var loginHashes = /* @__PURE__ */ new Map();
+  function gravatarUrl(username) {
+    return `https://gravatar.com/avatar/${loginHashes.get(username)}?s=512`;
+  }
   function getGravatarUrl(username) {
     return __async(this, null, function* () {
+      let url = gravatarUrl(username);
+      const res = yield fetch(url, { method: "HEAD" });
+      return res.headers.get("content-length") !== "17698" ? url : void 0;
+    });
+  }
+  function getAvatarUrl(username) {
+    return __async(this, null, function* () {
       if (loginHashes.has(username)) {
-        let avatar = yield (yield isRocketAvatarExists(username)) ? rocketAvatar(username) : getNeko(username);
-        return `https://gravatar.com/avatar/${loginHashes.get(username)}?s=512&d=${encodeURIComponent(avatar)}`;
+        return (yield getGravatarUrl(username)) || (yield getRocketAvatarUrl(username)) || (yield getNeko(username));
       }
       const email = `${username}@student.21-school.ru`;
       const hash2 = yield digestText(email);
       loginHashes.set(username, hash2);
-      return yield getGravatarUrl(username);
+      return yield getAvatarUrl(username);
     });
   }
   function findUsernameNearby(i) {
@@ -3591,7 +3601,7 @@ ${indent}in ${name}`).join("")}
         if (window.location.pathname === "/competition/tournament") {
           yield ensureNekoPoolLength(50);
         }
-        const url = yield getGravatarUrl(username);
+        const url = yield getAvatarUrl(username);
         observer4.disconnect();
         img.src = url;
         observe2();
