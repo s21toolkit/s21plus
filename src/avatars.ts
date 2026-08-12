@@ -15,16 +15,28 @@ function rocketAvatar(username: string) {
 	return `https://rocketchat-student.21-school.ru/avatar/${username}`
 }
 
-async function isRocketAvatarExists(username: string) {
-	const res = await fetch(rocketAvatar(username), { method: "HEAD" })
-	return res.headers.get("content-type") !== "image/svg+xml"
+async function getRocketAvatarUrl(username: string) {
+	let url = rocketAvatar(username)
+	const res = await fetch(url, { method: "HEAD" })
+	return res.headers.get("content-type") !== "image/svg+xml" ? url : undefined
 }
 
 const loginHashes = new Map()
-export async function getGravatarUrl(username: string) {
+function gravatarUrl(username: string) {
+	return `https://gravatar.com/avatar/${loginHashes.get(username)}?s=512`
+}
+
+async function getGravatarUrl(username: string) {
+	let url = gravatarUrl(username)
+	const res = await fetch(url, { method: "HEAD" })
+	return res.headers.get("content-length") !== "17698" ? url : undefined
+}
+
+export async function getAvatarUrl(username: string) {
 	if (loginHashes.has(username)) {
-		let avatar = await (await isRocketAvatarExists(username) ? rocketAvatar(username) : getNeko(username))
-		return `https://gravatar.com/avatar/${loginHashes.get(username)}?s=512&d=${encodeURIComponent(avatar)}`
+		return await getGravatarUrl(username) ||
+			await getRocketAvatarUrl(username) ||
+			await getNeko(username)
 	}
 
 	const email = `${username}@student.21-school.ru`
@@ -32,7 +44,7 @@ export async function getGravatarUrl(username: string) {
 
 	loginHashes.set(username, hash)
 
-	return await getGravatarUrl(username)
+	return await getAvatarUrl(username)
 }
 
 async function findUsernameNearby(i: HTMLImageElement) {
@@ -64,7 +76,7 @@ const observer = new MutationObserver(async (records) => {
 				await ensureNekoPoolLength(50)
 			}
 
-			const url = await getGravatarUrl(username)
+			const url = await getAvatarUrl(username)
 
 			observer.disconnect()
 			img.src = url
